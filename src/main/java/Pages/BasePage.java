@@ -1,26 +1,31 @@
 package Pages;
 
-import DriverUtil.DriverUtil;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 
-public class BasePage {
+public abstract class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
 
-    public BasePage(WebDriver driver){
-        this.driver = DriverUtil.getdriver();
-        this.wait = new WebDriverWait(this.driver, Duration.ofSeconds(10)); // Default wait time of 10 seconds
-
+    public BasePage(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
-    public String navigateTo(String url) {
-        if (url == null || url.isEmpty()) {
-            throw new IllegalArgumentException("URL cannot be null or empty");
-        }
-        driver.get(url);
-        return driver.getCurrentUrl();
 
+    protected WebElement waitForElementToBeVisible(WebElement element) {
+        return wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    protected void clickElement(WebElement element) {
+        waitForElementToBeVisible(element).click();
+    }
+
+    protected void typeText(WebElement element, String text) {
+        WebElement visibleElement = waitForElementToBeVisible(element);
+        visibleElement.clear();
+        visibleElement.sendKeys(text);
     }
 }

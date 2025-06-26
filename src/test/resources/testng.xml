@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="testng" parallel="tests" thread-count="2" verbose="2">
+    <test name="Sign test" >
+        <classes>
+            <class name="SignUpTest">
+                <methods>
+                    <include name="testSignUp"/>
+                </methods>
+            </class>
+        </classes>
+
+
+
+
+    </test>
+</suite>
