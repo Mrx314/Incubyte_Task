@@ -34,7 +34,8 @@ public class SignUpPage extends BasePage {
         typeText(driver.findElement(passwordConfirmation), password);
         clickElement(driver.findElement(submitButton));
     }
-    public void Signup(){
+
+    public void Signup() {
         WebElement signUpButton = driver.findElement(SignUpButton);
         wait.until(ExpectedConditions.elementToBeClickable(signUpButton));
         if (signUpButton.isDisplayed()) {
@@ -43,6 +44,7 @@ public class SignUpPage extends BasePage {
             throw new RuntimeException("Sign Up button is not displayed on the page.");
         }
     }
+
     public String getSuccessMessage() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(successMessage));
         return driver.findElement(successMessage).getText();

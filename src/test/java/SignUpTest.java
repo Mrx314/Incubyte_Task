@@ -1,6 +1,7 @@
 import DriverUtil.DriverUtil;
 import Pages.HomePage;
 import Pages.SignUpPage;
+import net.bytebuddy.utility.RandomString;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -28,7 +29,14 @@ public class SignUpTest {
 
             String header = signUpPage.getHeader();
             Assert.assertEquals(header, "Create New Customer Account", "Header text mismatch!");
-            signUpPage.register("John", "klaus", "lkopa12@example.com", "Password123");
+
+            String firstName = RandomString.make(8);
+            String lastName = RandomString.make(8);
+            String email = RandomString.make(5) + "@example.com";
+            String password = RandomString.make(10);
+
+            signUpPage.register(firstName, lastName, email, password);
+
             Assert.assertEquals("Thank you for registering with Main Website Store." ,signUpPage.getSuccessMessage());
             logger.info("Sign-up test passed.");
         } catch (Exception e) {
