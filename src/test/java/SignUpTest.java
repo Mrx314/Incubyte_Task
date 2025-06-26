@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SignUpTest {
+public class    SignUpTest {
     private static final Logger logger = LoggerFactory.getLogger(SignUpTest.class);
     private WebDriver driver;
     private SignUpPage signUpPage;
@@ -33,7 +33,7 @@ public class SignUpTest {
             String firstName = RandomString.make(8);
             String lastName = RandomString.make(8);
             String email = RandomString.make(5) + "@example.com";
-            String password = RandomString.make(10);
+            String password = RandomString.make(12) + "#";
 
             signUpPage.register(firstName, lastName, email, password);
 
