@@ -1,5 +1,6 @@
 import DriverUtil.DriverUtil;
 import Pages.HomePage;
+import Pages.LoginPage;
 import Pages.SignUpPage;
 import net.bytebuddy.utility.RandomString;
 import org.openqa.selenium.WebDriver;
@@ -14,11 +15,17 @@ public class    SignUpTest {
     private static final Logger logger = LoggerFactory.getLogger(SignUpTest.class);
     private WebDriver driver;
     private SignUpPage signUpPage;
+    private HomePage hm ;
+    private LoginPage Lg ;
+    private String email = RandomString.make(5) + "@example.com";
+    private String password = RandomString.make(12) + "#";
 
     @BeforeMethod
     public void setUp() {
         driver = DriverUtil.getdriver(); // Use a driver utility/factory
         signUpPage = new SignUpPage(driver);
+        hm = new HomePage(driver);
+        Lg = new LoginPage(driver);
         logger.info("WebDriver initialized and SignUpPage loaded.");
     }
 
@@ -29,15 +36,17 @@ public class    SignUpTest {
 
             String header = signUpPage.getHeader();
             Assert.assertEquals(header, "Create New Customer Account", "Header text mismatch!");
-
             String firstName = RandomString.make(8);
             String lastName = RandomString.make(8);
-            String email = RandomString.make(5) + "@example.com";
-            String password = RandomString.make(12) + "#";
 
             signUpPage.register(firstName, lastName, email, password);
 
             Assert.assertEquals("Thank you for registering with Main Website Store." ,signUpPage.getSuccessMessage());
+            hm.signOut();
+            //Login test
+            hm.signIn();
+            Lg.login(email, password);
+
             logger.info("Sign-up test passed.");
         } catch (Exception e) {
             logger.error("Sign-up test failed: {}", e.getMessage());
