@@ -25,6 +25,7 @@ public class SignUpTest {
     public void testSignUp() {
         try {
             signUpPage.Signup();
+
             String header = signUpPage.getHeader();
             Assert.assertEquals(header, "Create New Customer Account", "Header text mismatch!");
             signUpPage.register("John", "klaus", "johpna12@example.com", "Password123");

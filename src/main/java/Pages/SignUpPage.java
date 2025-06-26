@@ -22,6 +22,7 @@ public class SignUpPage extends BasePage {
     }
 
     public String getHeader() {
+        handleAdPopup();
         return wait.until(ExpectedConditions.visibilityOfElementLocated(header)).getText();
     }
 
@@ -35,6 +36,7 @@ public class SignUpPage extends BasePage {
     }
     public void Signup(){
         WebElement signUpButton = driver.findElement(SignUpButton);
+        wait.until(ExpectedConditions.elementToBeClickable(signUpButton));
         if (signUpButton.isDisplayed()) {
             signUpButton.click();
         } else {

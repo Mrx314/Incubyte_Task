@@ -1,5 +1,6 @@
 package Pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -9,6 +10,7 @@ import java.time.Duration;
 public abstract class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
+    private final By closeButtonLocator = By.xpath("//*[@id=\"dismiss-button\"]/div");
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -27,5 +29,29 @@ public abstract class BasePage {
         WebElement visibleElement = waitForElementToBeVisible(element);
         visibleElement.clear();
         visibleElement.sendKeys(text);
+    }
+    protected void handleAlert(boolean accept) {
+        try {
+            wait.until(ExpectedConditions.alertIsPresent());
+            if (accept) {
+                driver.switchTo().alert().accept();
+            } else {
+                driver.switchTo().alert().dismiss();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("No alert present or unable to handle alert: " + e.getMessage());
+        }
+    }
+    protected void handleAdPopup() {
+        try {
+            WebElement popup = wait.until(ExpectedConditions.visibilityOfElementLocated(closeButtonLocator));
+            if (popup.isDisplayed()) {
+                WebElement closeButton = popup.findElement(closeButtonLocator);
+                closeButton.click();
+            }
+        } catch (Exception e) {
+            // Log or handle the absence of the pop-up gracefully
+            System.out.println("Ad pop-up not present or unable to handle: " + e.getMessage());
+        }
     }
 }
