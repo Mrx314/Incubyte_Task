@@ -28,7 +28,7 @@ public class SignUpTest {
 
             String header = signUpPage.getHeader();
             Assert.assertEquals(header, "Create New Customer Account", "Header text mismatch!");
-            signUpPage.register("John", "klaus", "johpna12@example.com", "Password123");
+            signUpPage.register("John", "klaus", "lkopa12@example.com", "Password123");
             Assert.assertEquals("Thank you for registering with Main Website Store." ,signUpPage.getSuccessMessage());
             logger.info("Sign-up test passed.");
         } catch (Exception e) {

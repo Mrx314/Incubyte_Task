@@ -1,6 +1,7 @@
 package Pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -11,6 +12,7 @@ public abstract class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
     private final By closeButtonLocator = By.xpath("//*[@id=\"dismiss-button\"]/div");
+    JavascriptExecutor js ;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -47,7 +49,7 @@ public abstract class BasePage {
             WebElement popup = wait.until(ExpectedConditions.visibilityOfElementLocated(closeButtonLocator));
             if (popup.isDisplayed()) {
                 WebElement closeButton = popup.findElement(closeButtonLocator);
-                closeButton.click();
+                js.executeScript("arguments[0].scrollIntoView(true);", closeButton);
             }
         } catch (Exception e) {
             // Log or handle the absence of the pop-up gracefully
